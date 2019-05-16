@@ -12,18 +12,32 @@ module.exports = {
     },
 
     postLogin: async (req, res) => {
-        const {username, password} =  req.body;
+        const { username, password } = req.body;
 
         const hashedPassword = md5(password);
 
-        let adminAcc = await Admin.findOne({username: username, password: hashedPassword});
-        
-        if(!adminAcc){
+        let adminAcc = await Admin.findOne({ username: username });
+
+        if (!adminAcc) {
             res.render('admin/login', {
-                error: 'Sai ten dang nhap hoc mat khau',
-            })
+                errors: [
+                    'User does not exist.'
+                ],
+                values: req.body
+            });
+            return;
         }
-        res.cookie('Cookie', adminAcc._id);
+
+        if (adminAcc.password !== hashedPassword) {
+            res.render('admin/login', {
+                errors: [
+                    'Wrong password!'
+                ],
+                values: req.body
+            });
+            return;
+        }
+        res.cookie('adID', adminAcc._id);
         res.redirect('/admin/');
     }
 }
