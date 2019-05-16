@@ -1,9 +1,9 @@
-<% include ../layouts/layout %>
+<% include ./layouts/layout %>
 
 
 <div class="mt-5">
 
-    <form action="/admin/login" method="POST" class="ml-5 w-25">
+    <form action="/login" method="POST" class="ml-5 w-25">
         <% if(typeof errors == 'object' && errors){ %>
         <% errors.forEach(function(error){ %>
         <div class="alert alert-danger" role="alert">
@@ -14,11 +14,11 @@
         <h1>Login</h1>
         <div class="form-group ml-2">
             <label for="username">Username</label>
-            <input class="form-control" id="username" placeholder="Enter email" name="username" value= <%= values ? values.username: ' ' %>
+            <input class="form-control" type="text" id="username" placeholder="Enter email" name="username" >
         </div>
         <div class="form-group ml-2">
             <label for="password">Password</label>
-            <input class="form-control" id="password" placeholder="Enter Password" name="password" value= <%= values ? values.password : ' ' %>>
+            <input class="form-control" type="password" id="password" placeholder="Enter Password" name="password">
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
